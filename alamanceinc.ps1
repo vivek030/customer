@@ -20,7 +20,7 @@ $hostname = hostname
 $name = "$id/$hostname"
 Do {$api = Read-Host 'Enter API Key'} while ([string]::IsNullOrWhiteSpace($api))
 $json = @"
-{\"Email\":\"$email\",\"Identifier\":\"$name\"}
+{\"Email\":\"demokorplink@alamanceinc.com\",\"Identifier\":\"$name\"}
 "@
 curl.exe --silent  -f -k -X POST "https://api.korplink.com/api/v1/provisioning/peers" -H "accept: text/plain" -H "authorization: Basic $api" -H "Content-Type: application/json" -d $json -o "C:\kpl.conf" | Out-Null
 Start-Process msiexec.exe -ArgumentList '/q','DO_NOT_LAUNCH=True','/I', 'https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi' -Wait -NoNewWindow -PassThru | Out-Null
