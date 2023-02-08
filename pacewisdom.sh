@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 sudo apt-get install wireguard-tools
+sudo apt install resolvconf
 email="demokorplink@pacewisdom.com"
 read -p 'Enter Friendly Name: ' id < /dev/tty
 read -p 'Enter API Key: ' api < /dev/tty
