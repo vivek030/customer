@@ -22,7 +22,8 @@ Do {$api = Read-Host 'Enter API Key'} while ([string]::IsNullOrWhiteSpace($api))
 $json = @"
 {\"Email\":\"demokorplink@alamanceinc.com\",\"Identifier\":\"$name\"}
 "@
-curl.exe --silent -X "POST" -H "accept: text/plain" -H "authorization: Basic $api" -H "Content-Type: application/json" -d "{\"Email\":\"demokorplink@alamanceinc.com\",\"Identifier\":\"newnew\"}" "https://api.korplink.com/api/v1/provisioning/peers" -o "C:\kpl.conf"
+curl.exe --silent -X "POST" -H "accept: text/plain" -H "authorization: Basic $api" -H "Content-Type: application/json" -d^
+"{\"Email\":\"demokorplink@alamanceinc.com\",\"Identifier\":\"newnew\"}" "https://api.korplink.com/api/v1/provisioning/peers" -o "C:\kpl.conf"
 Start-Process msiexec.exe -ArgumentList '/q','DO_NOT_LAUNCH=True','/I', 'https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi' -Wait -NoNewWindow -PassThru | Out-Null
 Start-Process 'C:\Program Files\WireGuard\wireguard.exe' -ArgumentList '/installtunnelservice', '"C:\kpl.conf"' -Wait -NoNewWindow -PassThru | Out-Null
 Start-Process sc.exe -ArgumentList 'config', 'WireGuardTunnel$kpl', 'start= delayed-auto' -Wait -NoNewWindow -PassThru | Out-Null
