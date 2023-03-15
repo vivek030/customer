@@ -14,15 +14,15 @@ function Show-Menu
  switch ($selection)
  {
      '1' {
-         $dns = "10.6.6.42,10.6.6.1"
+         $dns = "10.6.6.1"
 Do {$id = Read-Host 'Enter Friendly Name'} while ([string]::IsNullOrWhiteSpace($id))
 $hostname = hostname
 $name = "$id/$hostname"
 Do {$api = Read-Host 'Enter API Key'} while ([string]::IsNullOrWhiteSpace($api))
 $json = @"
-{\"Email\":\"demokorplink@alamanceinc.com\",\"Identifier\":\"$name\",\"DNSStr\":\"$dns\"}
+{\"Email\":\"demokorplink@pwip.com\",\"Identifier\":\"$name\",\"DNSStr\":\"$dns\"}
 "@
-curl.exe --silent -X POST "https://api.korplink.com/api/v1/provisioning/peers" -H "accept: text/plain" -H "authorization: Basic $api" -H "Content-Type: application/json" -d $json -o "C:\kpl.conf"
+curl.exe --silent -X POST "http://demo.korplink.com/api/v1/provisioning/peers" -H "accept: text/plain" -H "authorization: Basic $api" -H "Content-Type: application/json" -d $json -o "C:\kpl.conf"
 Start-Process msiexec.exe -ArgumentList '/q','DO_NOT_LAUNCH=True','/I', 'https://download.wireguard.com/windows-client/wireguard-amd64-0.5.3.msi' -Wait -NoNewWindow -PassThru | Out-Null
 Start-Process 'C:\Program Files\WireGuard\wireguard.exe' -ArgumentList '/installtunnelservice', '"C:\kpl.conf"' -Wait -NoNewWindow -PassThru | Out-Null
 Start-Process sc.exe -ArgumentList 'config', 'WireGuardTunnel$kpl', 'start= delayed-auto' -Wait -NoNewWindow -PassThru | Out-Null
